@@ -18,12 +18,12 @@ export class PlazaScene extends Phaser.Scene {
         const iceTileset = map.addTilesetImage('ice', 'ice');
         const autumTileset = map.addTilesetImage('autum', 'autum');
         const layers = [
-            map.createLayer('baseTerrain', [iceTileset, autumTileset]),
-            map.createLayer('baseTerrain2', [iceTileset, autumTileset]),
-            map.createLayer('decorations', [iceTileset, autumTileset]),
-            map.createLayer('decorations2', [iceTileset, autumTileset]),
+            map.createLayer('baseTerrain', [iceTileset, autumTileset], 0, 0),
+            map.createLayer('baseTerrain2', [iceTileset, autumTileset], 0, 0),
+            map.createLayer('decorations', [iceTileset, autumTileset], 0, 0),
+            map.createLayer('decorations2', [iceTileset, autumTileset], 0, 0),
         ];
-        this.cameras.main.setZoom(4);
+        this.cameras.main.setZoom(3);
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels, true);
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels, true);
 

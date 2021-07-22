@@ -11,11 +11,13 @@ const _ = new Phaser.Game({
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true
+      debug: true,
+      gravity: { y: 0, x: 0 },
+
     }
   },
   scale: {
     mode: Phaser.Scale.RESIZE,
     resizeInterval: 500
-  },
+  }
 });
