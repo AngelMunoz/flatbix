@@ -1,11 +1,21 @@
-/**
- * This file is just a silly example to show everything working in the browser.
- * When you're ready to start on your site, clear the file. Happy hacking!
- **/
+import Phaser from 'phaser';
+import { MainScene, PlazaScene } from './scenes/index.js';
 
-import confetti from 'canvas-confetti';
-
-confetti.create(document.getElementById('canvas') as HTMLCanvasElement, {
-  resize: true,
-  useWorker: true,
-})({ particleCount: 200, spread: 200 });
+const _ = new Phaser.Game({
+  height: 600,
+  width: 800,
+  type: Phaser.AUTO,
+  parent: 'game',
+  pixelArt: true,
+  scene: [MainScene, PlazaScene],
+  physics: {
+    default: 'arcade',
+    arcade: {
+      debug: true
+    }
+  },
+  scale: {
+    mode: Phaser.Scale.RESIZE,
+    resizeInterval: 500
+  },
+});
