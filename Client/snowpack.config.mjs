@@ -37,6 +37,11 @@ const config = {
   buildOptions: {
     /* ... */
   },
+  exclude: [
+    "**/*.{fs,fsproj}",
+    "**/bin/**",
+    "**/obj/**"
+  ],
 };
 
 
