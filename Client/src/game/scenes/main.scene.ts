@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import { moveAndAnimate } from '../movement.js';
 
 export class MainScene extends Phaser.Scene {
     controls?: Phaser.Cameras.Controls.FixedKeyControl;
@@ -44,13 +43,13 @@ export class MainScene extends Phaser.Scene {
 
         this.anims.create({
             key: 'idle',
-            frames: this.anims.generateFrameNumbers('slime', { start: 0, end: 8 }),
-            frameRate: 10,
-            repeat: -1,
+            frames: this.anims.generateFrameNumbers('slime', { start: 0, end: 3 }),
+            frameRate: 5,
+            repeat: -1
         });
         this.anims.create({
             key: 'left',
-            frames: this.anims.generateFrameNumbers('slime', { start: 4, end: 6 }),
+            frames: this.anims.generateFrameNumbers('slime', { start: 4, end: 7 }),
             frameRate: 10,
             repeat: -1,
         });
@@ -68,6 +67,7 @@ export class MainScene extends Phaser.Scene {
         });
         const explosion = this.physics.add.sprite(0, 0, 'explosion-1');
         explosion.setVisible(false);
+        this.player.play('idle', true);
 
         // Help text that has a "fixed" position on the screen
         const fullScreenBtn = this.add
@@ -107,30 +107,27 @@ export class MainScene extends Phaser.Scene {
             explosion.setPosition(pos.x, pos.y);
             explosion.play('exploding-1', true);
         });
-
-        this.input.on('pointerdown', () => {
-            if (this.player) {
-                this.destination = new Phaser.Math.Vector2();
-                this.input.mousePointer.positionToCamera(this.cameras.main, this.destination);
-                this.player?.play('right');
-                this.player.setAngularAcceleration(0);
-                this.physics.accelerateTo(this.player.body.gameObject, this.destination.x, this.destination.y, 900, 200, 150);
-            }
-        });
     }
 
     update(_time: any, delta: number) {
         // if (this.player && this.cursors) {
         //     moveAndAnimate(this.player, this.cursors);
         // }
+        if (this.player && this.input.mousePointer.isDown) {
+            this.destination = new Phaser.Math.Vector2();
+            this.input.mousePointer.positionToCamera(this.cameras.main, this.destination);
+            this.player?.play('right', true);
+            this.player.setAngularAcceleration(0);
+            this.physics.moveTo(this.player.body.gameObject, this.destination.x, this.destination.y, 800);
+        }
 
         if (this.player && this.destination) {
             const result = this.player.body.position.distance(this.destination);
-            if (result <= 45) {
+            if (result <= 38) {
                 this.player.setVelocity(0);
                 this.player.setAcceleration(0);
                 this.player.setAngularAcceleration(0);
-                this.player.play('idle');
+                this.player.play('idle', true);
             }
 
             if (this.skillKeys && this.skillKeys.F1.isDown) {

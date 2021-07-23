@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Flatbix.Client", "Client\src\Flatbix.Client.fsproj", "{2DF8B059-01E9-41C6-8398-5FCE0E76FFC5}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Flatbix.Server", "Server\Flatbix.Server.fsproj", "{8EE623DD-D838-49F7-B3CD-3AF5EFE6160D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2DF8B059-01E9-41C6-8398-5FCE0E76FFC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DF8B059-01E9-41C6-8398-5FCE0E76FFC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DF8B059-01E9-41C6-8398-5FCE0E76FFC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DF8B059-01E9-41C6-8398-5FCE0E76FFC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EE623DD-D838-49F7-B3CD-3AF5EFE6160D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EE623DD-D838-49F7-B3CD-3AF5EFE6160D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EE623DD-D838-49F7-B3CD-3AF5EFE6160D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EE623DD-D838-49F7-B3CD-3AF5EFE6160D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

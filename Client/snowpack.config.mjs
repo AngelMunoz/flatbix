@@ -3,6 +3,7 @@ const config = {
   mount: {
     public: { url: '/', static: true },
     src: { url: '/dist' },
+    '../Shared': { url: '/Shared', static: true },
   },
   plugins: [
     [
