@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "Root"
+		},
+		{
+			"path": "./Client/src",
+			"name": "Client"
+		},
+		{
+			"path": "./Client/src/ui",
+			"name": "UI"
+		},
+		{
+			"path": "./Client/src/game",
+			"name": "Game"
+		},
+		{
+			"path": "./Server",
+			"name": "Server"
+		}
+	],
+	"settings": {}
+}

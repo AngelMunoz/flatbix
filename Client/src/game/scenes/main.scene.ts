@@ -1,3 +1,4 @@
+import { GameAssetsUrl } from '@src/environment';
 import Phaser from 'phaser';
 
 export function MainSceneFactory() {
@@ -24,11 +25,11 @@ export function MainSceneFactory() {
         }
 
         preload() {
-            this.load.image('ice', '/assets/tilesets/ice.png');
-            this.load.image('autum', '/assets/tilesets/autum.png');
-            this.load.tilemapTiledJSON('map', '/assets/sample-map.json');
-            this.load.spritesheet('slime', '/assets/tilesets/slime.png', { frameWidth: 32, frameHeight: 25 });
-            this.load.spritesheet('explosion-1', '/assets/tilesets/explosion-6.png', { frameWidth: 48 });
+            this.load.image('ice', `${GameAssetsUrl}/tilesets/ice.png`);
+            this.load.image('autum', `${GameAssetsUrl}/tilesets/autum.png`);
+            this.load.tilemapTiledJSON('map', `${GameAssetsUrl}/main-plaza.json`);
+            this.load.spritesheet('slime', `${GameAssetsUrl}/tilesets/slime.png`, { frameWidth: 32, frameHeight: 25 });
+            this.load.spritesheet('explosion-1', `${GameAssetsUrl}/tilesets/explosion-6.png`, { frameWidth: 48 });
         }
 
         create() {
@@ -37,7 +38,10 @@ export function MainSceneFactory() {
             const autumTileset = map.addTilesetImage('autum', 'autum');
             this.layers = [
                 map.createLayer('baseTerrain', [iceTileset, autumTileset], 0, 0),
+                map.createLayer('baseTerrain1', [iceTileset, autumTileset], 0, 0),
+                map.createLayer('baseTerrain2', [iceTileset, autumTileset], 0, 0),
                 map.createLayer('decorations', [iceTileset, autumTileset], 0, 0),
+                map.createLayer('decorations1', [iceTileset, autumTileset], 0, 0),
             ];
             this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
             this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);

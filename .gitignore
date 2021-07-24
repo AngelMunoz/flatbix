@@ -444,6 +444,9 @@ $RECYCLE.BIN/
 .idea/
 *.sln.iml
 
+# remove other tiled files
+*.tiled-*
+
 ##
 ## Visual Studio Code
 ##
@@ -452,5 +455,9 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+# keep the tiled project in the directory
+!*.tiled-project
+
 .fable
 *.fs.js
+local.env

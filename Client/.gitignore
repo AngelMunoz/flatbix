@@ -1,8 +1,3 @@
 .snowpack
 build
 node_modules
-# remove other tiled files
-*.tiled-*
-
-# keep the tiled project in the directory
-!*.tiled-project

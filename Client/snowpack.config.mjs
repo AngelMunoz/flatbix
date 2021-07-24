@@ -42,6 +42,14 @@ const config = {
     "**/bin/**",
     "**/obj/**"
   ],
+  env: {
+    SERVER_BASE_URL: process.env.FLATBIX_SERVER_URL || 'http://localhost:5000',
+  },
+  alias: {
+    "@src": "./src",
+    "@ui": "./src/ui",
+    "@game": "./src/game"
+  }
 };
 
 

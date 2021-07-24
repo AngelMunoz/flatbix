@@ -58,7 +58,4 @@ declare module '*.png' {
 
 /* CUSTOM: ADD YOUR OWN HERE */
 
-declare interface HasPlayer extends Phaser.Scene {
-  player?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
-  cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-}
+declare const __SNOWPACK_ENV__: Record<string, any>;
