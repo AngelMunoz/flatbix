@@ -1,6 +1,14 @@
 module Shared.Types
 
 
+type SigninPayload = { email: string; password: string }
+
+type SignupPayload =
+    { email: string
+      password: string
+      username: string }
+
+
 [<RequireQualifiedAccess>]
 type Action =
     | IncrementCount of int
@@ -12,6 +20,5 @@ type Response =
     | NewCount of int
     | RandomCharacter of string
 
-module Endpoints =
-    [<Literal>]
-    let Root = "/SignalR"
+[<Literal>]
+let HubRootUrl = "/flatbix-hub"

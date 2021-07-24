@@ -2,12 +2,14 @@ module Flatbix.Server.Program
 
 open FSharp.Control.Tasks
 
+open Microsoft.Extensions.Logging
+open Microsoft.AspNetCore.Builder
 
-open Microsoft.AspNetCore.SignalR
 open Fable.SignalR
 
-
+open Giraffe
 open Saturn
+open Saturn.Endpoint
 
 open Shared.Types
 
@@ -28,22 +30,37 @@ let sInvoke (msg: Action) _ = task { return update msg }
 let sSend (msg: Action) (hubContext: FableHub<Action, Response>) =
     update msg |> hubContext.Clients.Caller.Send
 
+let apiPipeline =
+    pipeline {
+        plug acceptJson
+        plug requestId
+        set_header "x-flatbix-pipeline" "api"
+    }
+
+let apiRouter =
+    router {
+        pipe_through apiPipeline
+        post "/auth/signin" Auth.SignIn
+        post "/auth/signup" Auth.Signup
+    }
+
+
 [<EntryPoint>]
 let main args =
     let app =
         application {
             use_developer_exceptions
-            use_static "wwwroot"
-            no_router
-
+            use_endpoint_router apiRouter
 
             use_signalr (
                 configure_signalr {
-                    endpoint Endpoints.Root
+                    endpoint HubRootUrl
                     send sSend
                     invoke sInvoke
                     use_messagepack
-                    with_log_level Microsoft.Extensions.Logging.LogLevel.Debug
+                    with_log_level LogLevel.Debug
+                    with_after_routing (fun app -> app.UseAuthorization())
+                    with_endpoint_config (fun builder -> builder.RequireAuthorization())
                 }
             )
 

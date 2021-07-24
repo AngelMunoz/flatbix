@@ -4,11 +4,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../Shared/Types.fs" />
+    <Compile Include="Auth.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fable.Remoting.MsgPack" Version="1.13.0" />
     <PackageReference Include="Fable.SignalR.Saturn" Version="0.11.5" />
+    <PackageReference Include="FsToolkit.ErrorHandling" Version="2.6.0" />
+    <PackageReference Include="FsToolkit.ErrorHandling.TaskResult" Version="2.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="5.0.8" />
     <PackageReference Include="newtonsoft.json" Version="13.0.1" />
     <PackageReference Include="Saturn" Version="0.15.*" />

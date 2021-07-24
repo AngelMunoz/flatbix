@@ -7,6 +7,9 @@
 
   <ItemGroup>
     <Compile Include="../../Shared/Types.fs" />
+    <Compile Include="ClientTypes.fs" />
+    <Compile Include="Hub.fs" />
+    <Compile Include="ui/App.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
 
