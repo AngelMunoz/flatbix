@@ -3,8 +3,9 @@
     "start": "dotnet fable watch src --run snowpack dev",
     "build": "dotnet fable watch && snowpack build",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
-    "format": "prettier --write \"src/**/*.{ts,js}\"",
-    "lint": "prettier --check \"src/**/*.{ts,js}\""
+    "format": "prettier --write \"src/**/*.{ts,js}\" && dotnet run fantomas src --recurse",
+    "lint": "prettier --check \"src/**/*.{ts,js}\"",
+    "postinstall": "dotnet tool restore"
   },
   "dependencies": {
     "phaser": "~3.55.2",

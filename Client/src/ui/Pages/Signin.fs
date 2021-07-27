@@ -69,7 +69,10 @@ type Signin =
               Attr.id "email"
               Attr.name "email"
               Attr.required true
-              bindAttrBoth "value" (getEmailObs formState) (updateEmail formState)
+              bindAttrBoth
+                "value"
+                (getEmailObs formState)
+                (updateEmail formState)
             ]
           ]
           Html.section [
@@ -83,7 +86,10 @@ type Signin =
               Attr.id "password"
               Attr.name "password"
               Attr.required true
-              bindAttrBoth "value" (getPasswordObs formState) (updatePassword formState)
+              bindAttrBoth
+                "value"
+                (getPasswordObs formState)
+                (updatePassword formState)
             ]
           ]
           Html.section [
@@ -94,7 +100,10 @@ type Signin =
                 Attr.type' "checkbox"
                 Attr.id "rememberMe"
                 Attr.name "rememberMe"
-                bindAttrBoth "checked" (getRememberMeObs formState) (updateRememberMe formState)
+                bindAttrBoth
+                  "checked"
+                  (getRememberMeObs formState)
+                  (updateRememberMe formState)
               ]
             ]
           ]
