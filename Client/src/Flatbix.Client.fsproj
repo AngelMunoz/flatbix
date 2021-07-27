@@ -9,8 +9,12 @@
     <Compile Include="../../Shared/Types.fs" />
     <Compile Include="ClientTypes.fs" />
     <Compile Include="Hub.fs" />
-    <Compile Include="ui/Auth.fs" />
-    <Compile Include="ui/Game.fs" />
+    <Compile Include="ui/Stores.fs" />
+    <Compile Include="ui/Pages/Signin.fs" />
+    <Compile Include="ui/Pages/Signup.fs" />
+    <Compile Include="ui/Pages/Game.fs" />
+    <Compile Include="ui/Pages/About.fs" />
+    <Compile Include="ui/Pages/Home.fs" />
     <Compile Include="ui/App.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>

@@ -1,8 +1,15 @@
 module ClientTypes
 
-open Fable.Core
 open Fable.Core.JS
 open Browser.Types
+
+[<RequireQualifiedAccess>]
+type Page =
+  | Home
+  | Signin
+  | Signup
+  | About
+  | Game
 
 [<Interface>]
 type IGameService =
