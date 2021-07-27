@@ -48,7 +48,8 @@ const config = {
   alias: {
     "@src": "./src",
     "@ui": "./src/ui",
-    "@game": "./src/game"
+    "@game": "./src/game",
+    "@shared": "../Shared"
   }
 };
 

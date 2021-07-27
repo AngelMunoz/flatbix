@@ -24,6 +24,9 @@
       ],
       "@game/*": [
         "./src/game/*"
+      ],
+      "@shared/*": [
+        "../Shared/*"
       ]
     },
     "allowSyntheticDefaultImports": true,
