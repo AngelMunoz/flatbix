@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DefineConstants>FABLE_COMPILER</DefineConstants>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="../../Shared/Types.fs" />
     <Compile Include="ClientTypes.fs" />
