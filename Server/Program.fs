@@ -1,5 +1,7 @@
 module Flatbix.Server.Program
 
+open System
+
 open FSharp.Control.Tasks
 
 open Microsoft.Extensions.Logging
@@ -10,6 +12,8 @@ open Fable.SignalR
 open Giraffe
 open Saturn
 open Saturn.Endpoint
+
+open Thoth.Json.Giraffe
 
 open Shared.Types
 
@@ -44,7 +48,6 @@ let apiRouter =
     post "/auth/signup" Auth.Signup
   }
 
-
 [<EntryPoint>]
 let main args =
   let app =
@@ -52,6 +55,14 @@ let main args =
       use_developer_exceptions
       use_endpoint_router apiRouter
       use_static "wwwroot"
+      use_jwt_authentication Constants.JWT_SECRET "http://locahost:5000"
+
+      use_json_serializer (
+        ThothSerializer(
+          Thoth.Json.Net.CaseStrategy.CamelCase,
+          skipNullField = true
+        )
+      )
 
       use_signalr (
         configure_signalr {

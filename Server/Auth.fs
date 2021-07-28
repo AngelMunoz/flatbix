@@ -1,11 +1,17 @@
 namespace Flatbix.Server
 
 open FSharp.Control.Tasks
-open Giraffe
-open Shared.Types
+
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.Logging
+open System.Security.Claims
+
+open Giraffe
+open Saturn.Auth
 open FsToolkit.ErrorHandling
+
+open Shared.Types
+open System
 
 [<RequireQualifiedAccess>]
 module Auth =
@@ -25,6 +31,18 @@ module Auth =
         return None
     }
 
+  let private getToken (email: string) =
+    let claims = [ Claim(ClaimTypes.Email, email) ]
+
+    let expiresAt = DateTimeOffset.Now.AddDays(1.).Date
+
+    generateJWT
+      (Constants.JWT_SECRET, "HS256")
+      Constants.SERVER_URL
+      expiresAt
+      claims
+
+
   let SignIn (next: HttpFunc) (ctx: HttpContext) =
     task {
       let! getResult =
@@ -35,7 +53,11 @@ module Auth =
               BadRequest "Failed to parse sign in payload"
             )
 
-          return {|  |}
+          let token = getToken payload.email
+
+          return
+            {| token = token
+               user = payload.email |}
         }
 
       match getResult with
@@ -55,7 +77,11 @@ module Auth =
               BadRequest "Failed to parse sign in payload"
             )
 
-          return {|  |}
+          let token = getToken payload.email
+
+          return
+            {| token = token
+               user = payload.email |}
         }
 
       match getResult with

@@ -4,18 +4,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../Shared/Types.fs" />
+    <Compile Include="Constants.fs" />
+    <Compile Include="Database.fs" />
     <Compile Include="Auth.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
     <PackageReference Include="Fable.Remoting.MsgPack" Version="1.13.0" />
     <PackageReference Include="Fable.SignalR.Saturn" Version="0.11.5" />
     <PackageReference Include="FsToolkit.ErrorHandling" Version="2.6.0" />
     <PackageReference Include="FsToolkit.ErrorHandling.TaskResult" Version="2.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="5.0.8" />
-    <PackageReference Include="newtonsoft.json" Version="13.0.1" />
+    <PackageReference Include="Mondocks.Net" Version="0.4.2" />
+    <PackageReference Include="MongoDB.Bson" Version="2.13.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.13.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Saturn" Version="0.15.*" />
     <PackageReference Include="Ply" Version="0.3.*" />
+    <PackageReference Include="Thoth.Json.Giraffe" Version="5.0.0" />
+    <PackageReference Include="Thoth.Json.Net" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="5.0.2" />
