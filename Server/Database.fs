@@ -1,6 +1,6 @@
 namespace Flatbix.Server
 
-open FsToolkit.ErrorHandling
+open FSharp.Control.Tasks
 
 open type BCrypt.Net.BCrypt
 
@@ -22,7 +22,7 @@ module Database =
   [<Literal>]
   let private ColUsers = "fla_users"
 
-  module Commands =
+  module private Commands =
     let findUser (email: string) =
       find ColUsers {
         filter {| email = email |}
@@ -54,60 +54,30 @@ module Database =
       }
       |> JsonCommand<CountResult>
 
+  module FlbUsers =
+      let Exists (email: string) =
+          task {
+            let! found = db().RunCommandAsync(Commands.userExists email)
+            return found.n > 0 && found.ok = 1.
+          }
+
   module Auth =
-    [<RequireQualifiedAccess>]
-    type SignInError =
-      | GenericError of string
-      | Exists
-      | NotFound
-      | InvalidCredentials
-
-    let SignIn (email: string, password: string) =
-      taskResult {
-        let! found =
-          db()
-            .RunCommandAsync(Commands.findUserWithPassword email)
-
-        do!
-          found.cursor.firstBatch
-          |> Result.requireNotEmpty SignInError.NotFound
-
-        let user = found.cursor.firstBatch |> Seq.head
-
-        do!
-          EnhancedVerify(password, user.password)
-          |> Result.requireTrue SignInError.InvalidCredentials
-
-        return true
+    let TrySignIn (email: string, password: string) =
+      task {
+        let! found = db().RunCommandAsync(Commands.findUserWithPassword email)
+        match found.cursor.firstBatch |> Seq.tryHead with
+        | Some user ->
+          return EnhancedVerify(password, user.password)
+        | None -> return false
       }
-      |> TaskResult.catch (fun ex -> SignInError.GenericError ex.Message)
 
-    [<RequireQualifiedAccess>]
-    type SignUpError =
-      | GenericError of string
-      | Exists
-      | NotFound
-
-    let SignUp (payload: SignupPayload) =
-      taskResult {
-
-        let! exists =
-          db()
-            .RunCommandAsync(Commands.userExists payload.email)
-
-        do!
-          (exists.n = 1 && exists.ok = 1.0)
-          |> Result.requireTrue SignUpError.NotFound
+    let TrySignUp (payload: SignupPayload) =
+      task {
 
         let payload =
           { payload with
               password = EnhancedHashPassword(payload.password) }
 
         let! created = db().RunCommandAsync(Commands.createUser payload)
-
-        do!
-          (created.ok = 1.0 && created.n = 1)
-          |> Result.requireTrue (
-            SignUpError.GenericError "Could not create user"
-          )
+        return (created.n > 0 && created.ok = 1.)
       }
