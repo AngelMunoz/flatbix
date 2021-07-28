@@ -5,6 +5,7 @@
   <ItemGroup>
     <Compile Include="../Shared/Types.fs" />
     <Compile Include="Constants.fs" />
+    <Compile Include="Extensions.fs" />
     <Compile Include="Database.fs" />
     <Compile Include="Auth.fs" />
     <Compile Include="Program.fs" />
@@ -16,6 +17,7 @@
     <PackageReference Include="FsToolkit.ErrorHandling" Version="2.6.0" />
     <PackageReference Include="FsToolkit.ErrorHandling.TaskResult" Version="2.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="5.0.8" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.12.0" />
     <PackageReference Include="Mondocks.Net" Version="0.4.2" />
     <PackageReference Include="MongoDB.Bson" Version="2.13.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.13.0" />

@@ -461,3 +461,5 @@ $RECYCLE.BIN/
 .fable
 *.fs.js
 local.env
+# Ignore the playground only
+playground.fsx

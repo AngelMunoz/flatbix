@@ -1,35 +1,24 @@
 namespace Flatbix.Server
 
+open System
+open System.Security.Claims
+
 open FSharp.Control.Tasks
 
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.Logging
-open System.Security.Claims
 
 open Giraffe
 open Saturn.Auth
 open FsToolkit.ErrorHandling
 
+open Database
 open Shared.Types
-open System
 
 [<RequireQualifiedAccess>]
 module Auth =
 
   type private AuthErrors = BadRequest of string
-
-
-  let tryBindJson<'Type> (ctx: HttpContext) =
-    task {
-      try
-        let! value = ctx.BindJsonAsync<'Type>()
-        return Some value
-      with
-      | ex ->
-        let logger = ctx.GetLogger("Auth: tryBindJson")
-        logger.Log(LogLevel.Debug, ex.Message)
-        return None
-    }
 
   let private getToken (email: string) =
     let claims = [ Claim(ClaimTypes.Email, email) ]
@@ -48,7 +37,7 @@ module Auth =
       let! getResult =
         taskResult {
           let! payload =
-            tryBindJson<SigninPayload> ctx
+            ctx.TryBindJson<SigninPayload>()
             |> TaskResult.requireSome (
               BadRequest "Failed to parse sign in payload"
             )
@@ -72,7 +61,7 @@ module Auth =
       let! getResult =
         taskResult {
           let! payload =
-            tryBindJson<SignupPayload> ctx
+            ctx.TryBindJson<SigninPayload>()
             |> TaskResult.requireSome (
               BadRequest "Failed to parse sign in payload"
             )
