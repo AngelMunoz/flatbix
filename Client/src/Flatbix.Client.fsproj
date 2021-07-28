@@ -22,6 +22,8 @@
   <ItemGroup>
     <PackageReference Include="Fable.SignalR" Version="0.11.5" />
     <PackageReference Include="Sutil" Version="1.0.0-alpha-006" />
+    <PackageReference Include="Thoth.Fetch" Version="3.0.1" />
+    <PackageReference Include="Thoth.Json" Version="6.0.0" />
   </ItemGroup>
 
 </Project>
