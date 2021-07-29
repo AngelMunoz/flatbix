@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <DefineConstants>FABLE_COMPILER</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../Shared/Types.fs" />
@@ -24,6 +23,7 @@
     <PackageReference Include="Sutil" Version="1.0.0-alpha-006" />
     <PackageReference Include="Thoth.Fetch" Version="3.0.1" />
     <PackageReference Include="Thoth.Json" Version="6.0.0" />
+    <PackageReference Include="Fable.Promise" Version="2.2.2" />
   </ItemGroup>
 
 </Project>

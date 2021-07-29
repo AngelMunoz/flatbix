@@ -1,48 +1,77 @@
 [<AutoOpen>]
 module Pages.Signin
 
+open Browser.Types
+open Fable.Core.JsInterop
+
 open Sutil
 open Sutil.Attr
-open Stores
+
 open Sutil.DOM
-open Browser.Types
+open Shared.Types
+open Stores
 
-type private FormValues =
-  { email: string
-    password: string
-    rememberMe: bool }
+open Thoth.Fetch
+open Thoth.Json
+open Fetch
 
-let private getEmailObs state = state .> (fun s -> s.email)
 
-let private updateEmail store newEmail =
+let ServerUrl: string = importMember "@src/environment.js"
+
+
+let private getEmailObs (state: IStore<SigninPayload>) =
+  state .> (fun s -> s.email)
+
+let private updateEmail (store: IStore<SigninPayload>) newEmail =
   store
-  |> Store.modify (fun state -> { state with email = newEmail })
+  |> Store.modify
+       (fun (state: SigninPayload) -> { state with email = newEmail })
 
-let private getPasswordObs state = state .> (fun s -> s.password)
+let private getPasswordObs (state: IStore<SigninPayload>) =
+  state .> (fun s -> s.password)
 
 let private updatePassword store newPassword =
   store
-  |> Store.modify (fun state -> { state with password = newPassword })
+  |> Store.modify
+       (fun (state: SigninPayload) -> { state with password = newPassword })
 
-let private getRememberMeObs state = state .> (fun s -> s.rememberMe)
+let private trySingin (payload: SigninPayload) =
+  promise {
+    let! result =
+      Fetch.tryPost<SigninPayload, {| token: string; user: string |}> (
+        $"{ServerUrl}/auth/signin",
+        payload,
+        headers =
+          [ Accept "application/json"
+            ContentType "application/json" ]
+      )
 
-let private updateRememberMe store rememberMe =
-  store
-  |> Store.modify (fun state -> { state with rememberMe = rememberMe })
+    return
+      match result with
+      | Ok value -> Some value.token
+      | Result.Error (err) ->
+        eprintf "%A" err
+        None
+  }
 
 
 let private submitForm store (e: Event) =
   e.preventDefault ()
-  Store.current store |> printfn "%A"
-  ()
+
+  promise {
+    match! trySingin (Store.current store) with
+    | Some token ->
+      Store.modify
+        (fun appstore -> { appstore with AuthToken = Some token })
+        AppStore
+    | None -> ()
+  }
+  |> Promise.start
+
 
 type Signin =
   static member View(?isWidget: bool) =
-    let formState =
-      Store.make
-        { email = ""
-          password = ""
-          rememberMe = false }
+    let formState = Store.make { email = ""; password = "" }
 
     let isWidgetCls =
       if isWidget |> Option.defaultValue false then
@@ -90,21 +119,6 @@ type Signin =
                 "value"
                 (getPasswordObs formState)
                 (updatePassword formState)
-            ]
-          ]
-          Html.section [
-            Html.label [
-              Attr.for' "rememberMe"
-              text "Remember me "
-              Html.input [
-                Attr.type' "checkbox"
-                Attr.id "rememberMe"
-                Attr.name "rememberMe"
-                bindAttrBoth
-                  "checked"
-                  (getRememberMeObs formState)
-                  (updateRememberMe formState)
-              ]
             ]
           ]
         ]

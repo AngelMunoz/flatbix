@@ -7,12 +7,12 @@ open ClientTypes
 open Pages
 
 let private getPageObs (state: IStore<AppState>) =
-  state .> (fun state -> state.page)
+  state .> (fun state -> state.Page)
 
 let includeNavObs (state: IStore<AppState>) =
   state
   .> (fun state ->
-    match state.page with
+    match state.Page with
     | Page.Game -> false
     // I'll keep it explicit in case I add/remove a page that does not need  the nav
     | Page.About
@@ -22,15 +22,15 @@ let includeNavObs (state: IStore<AppState>) =
 
 let setPage (page: Page) (state: IStore<AppState>) =
   state
-  |> Store.modify (fun state -> { state with page = page })
+  |> Store.modify (fun state -> { state with Page = page })
 
 let appNav (state: IStore<AppState>) =
 
   let isPage page =
-    state .> (fun state -> state.page = page)
+    state .> (fun state -> state.Page = page)
 
   let navToPage page _ =
-    if (Store.current state).page = page then
+    if (Store.current state).Page = page then
       ()
     else
       setPage page state
